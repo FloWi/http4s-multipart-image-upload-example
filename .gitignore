@@ -1,0 +1,16 @@
+.idea/
+target/
+tmp/
+*.iml
+/src/main/resources/local.conf
+/docker/
+/.ideaDataSources/
+/dataSources/
+*.metals/
+*.bloop/
+terraform.tfstate.backup
+.terraform
+mykey*
+*.swp
+*.log
+*/.vagrant
