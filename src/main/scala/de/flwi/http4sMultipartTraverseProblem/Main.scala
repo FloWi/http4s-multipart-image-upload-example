@@ -6,10 +6,10 @@ import cats.data.Kleisli
 import cats.effect.{ExitCode, IO, IOApp}
 import cats.implicits._
 import de.flwi.http4sMultipartTraverseProblem.service.FileService
-import org.http4s.server.blaze.BlazeServerBuilder
-import org.http4s.{Request, Response}
 import org.http4s.implicits._
 import org.http4s.server.Router
+import org.http4s.server.blaze.BlazeServerBuilder
+import org.http4s.{Request, Response}
 
 import scala.concurrent.ExecutionContext
 

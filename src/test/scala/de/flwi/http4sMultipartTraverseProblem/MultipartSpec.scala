@@ -24,6 +24,22 @@ class MultipartSpec extends FunSuite with Matchers with Http4sClientDsl[IO] {
 
   val images: List[URL] = 1.to(3).map(i => getClass.getResource(s"/example-images/$i.png")).toList
 
+  def testHelper(uri: Uri): Assertion = {
+    val tempPath: Path                            = Files.createTempDirectory("file-upload")
+    val (request @ _, response: IO[Response[IO]]) = go(uri, tempPath)
+
+    val checkResult = Try(check[String](response, Status.Ok, Some("Multipart file parsed successfully --> 3 parts")))
+
+    val actualFileNames   = tempPath.toFile.listFiles().toList.map(_.getName)
+    val expectedFileNames = images.map(uri => new File(uri.toURI).getName)
+    actualFileNames should contain theSameElementsAs expectedFileNames
+
+    checkResult match {
+      case Failure(exception) => fail(exception)
+      case Success(_)         => succeed
+    }
+  }
+
   def go(uri: Uri, tempPath: Path): (Request[IO], IO[Response[IO]]) = {
 
     val service: HttpRoutes[IO] = new FileUploadService(new FileService(tempPath)).httpService
@@ -54,22 +70,6 @@ class MultipartSpec extends FunSuite with Matchers with Http4sClientDsl[IO] {
     expectedBody.fold(
       actualResp.body.compile.toVector.unsafeRunSync.isEmpty shouldBe true
     )(expected => actualResp.as[A].unsafeRunSync shouldBe expected)
-  }
-
-  def testHelper(uri: Uri): Assertion = {
-    val tempPath: Path                            = Files.createTempDirectory("file-upload")
-    val (request @ _, response: IO[Response[IO]]) = go(uri, tempPath)
-
-    val checkResult = Try(check[String](response, Status.Ok, Some("Multipart file parsed successfully --> 3 parts")))
-
-    val actualFileNames   = tempPath.toFile.listFiles().toList.map(_.getName)
-    val expectedFileNames = images.map(uri => new File(uri.toURI).getName)
-    actualFileNames should contain theSameElementsAs expectedFileNames
-
-    checkResult match {
-      case Failure(exception) => fail(exception)
-      case Success(_)         => succeed
-    }
   }
 
   //both testcases should work
