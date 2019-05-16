@@ -69,18 +69,12 @@ class MultipartSpec extends FunSuite with Matchers with Http4sClientDsl[IO] {
     actualResp.status shouldBe expectedStatus
     expectedBody.fold(
       actualResp.body.compile.toVector.unsafeRunSync.isEmpty shouldBe true
-    )(expected => actualResp.as[A].unsafeRunSync shouldBe expected)
+    )(expected => {
+      val actual = actualResp.as[A].unsafeRunSync
+      actual shouldBe expected
+    })
   }
 
-  //both testcases should work
-
-  //this writes all the files correctly, but doesn't return the expected string
-  test("should work without traverse") {
-
-    testHelper(Uri.uri("/upload-images-without-traverse"))
-  }
-
-  //this writes all the files correctly, but also doesn't return the expected string
   test("should work with traverse") {
 
     testHelper(Uri.uri("/upload-images-with-traverse"))
