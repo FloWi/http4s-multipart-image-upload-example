@@ -1,4 +1,4 @@
-package de.flwi.http4sMultipartTraverseProblem.helper
+package de.flwi.http4sMultipartImageUpload.helper
 
 import cats.effect.Sync
 import fs2.Stream

@@ -1,4 +1,4 @@
-package de.flwi.http4sMultipartTraverseProblem.service
+package de.flwi.http4sMultipartImageUpload.service
 
 import java.nio.file.Path
 

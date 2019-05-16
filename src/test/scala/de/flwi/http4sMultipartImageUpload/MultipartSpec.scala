@@ -1,11 +1,11 @@
-package de.flwi.http4sMultipartTraverseProblem
+package de.flwi.http4sMultipartImageUpload
 
 import java.io.File
 import java.net.URL
 import java.nio.file.{Files, Path}
 
 import cats.effect.{ContextShift, IO}
-import de.flwi.http4sMultipartTraverseProblem.service.{FileService, FileUploadService}
+import de.flwi.http4sMultipartImageUpload.service.{FileService, FileUploadService}
 import org.http4s._
 import org.http4s.client.dsl.Http4sClientDsl
 import org.http4s.headers._
@@ -75,8 +75,8 @@ class MultipartSpec extends FunSuite with Matchers with Http4sClientDsl[IO] {
     })
   }
 
-  test("should work with traverse") {
+  test("files should be uploaded successfully") {
 
-    testHelper(Uri.uri("/upload-images-with-traverse"))
+    testHelper(Uri.uri("/upload-images"))
   }
 }

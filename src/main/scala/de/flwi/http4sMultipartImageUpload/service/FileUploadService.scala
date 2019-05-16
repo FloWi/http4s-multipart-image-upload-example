@@ -1,4 +1,4 @@
-package de.flwi.http4sMultipartTraverseProblem.service
+package de.flwi.http4sMultipartImageUpload.service
 
 import cats.effect.{ContextShift, IO}
 import cats.implicits._
@@ -13,7 +13,7 @@ class FileUploadService(fileService: FileService) extends Http4sDsl[IO] {
   def httpService(implicit contextShift: ContextShift[IO], blockingEc: ExecutionContext): HttpRoutes[IO] =
     HttpRoutes.of[IO] {
 
-      case req@POST -> Root / "upload-images-with-traverse" =>
+      case req@POST -> Root / "upload-images" =>
         req.decodeWith(EntityDecoder.multipart, strict = true) { response =>
           val filteredParts: Vector[Part[IO]] = response.parts.filter(filterFileTypes)
           val saveResult: IO[Vector[Unit]] = filteredParts.traverse(fileService.store)

@@ -1,7 +1,7 @@
 lazy val root = (project in file("."))
   .settings(
     organization := "de.flwi",
-    name := "http4s-multipart-traverse-problem",
+    name := "http4s-multipart-image-upload-example",
     version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.12.8",
     scalacOptions ++= (if (devMode) compilerSettings else compilerSettings ++ strictAdditionalCompilerSettings),

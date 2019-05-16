@@ -1,11 +1,11 @@
-package de.flwi.http4sMultipartTraverseProblem
+package de.flwi.http4sMultipartImageUpload
 
 import java.io.File
 
 import cats.data.Kleisli
 import cats.effect.{ExitCode, IO, IOApp}
 import cats.implicits._
-import de.flwi.http4sMultipartTraverseProblem.service.FileService
+import de.flwi.http4sMultipartImageUpload.service.FileService
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
